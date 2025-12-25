@@ -37,14 +37,28 @@ def openAndSeedList(filename , dir):
 
     return lis
 
-def main():
-    acc = 0
-    cwd = os.getcwd()
+
+def getFactors(num):
+    # 1 -> 1
+    # 2 -> 1, 2
+    # 3 -> 1, 3
+    # 4  > 1, 2, 4
+    factors = []
+
+    for i in range(1, num+1):
+        res = num / i
+        extra = num % i
+      #  print(num, i)
+
+        if extra != 0:
+            print(f"Not a factor right? num: {num}, i: {i}")
+        else:
+            print(f"Should be a factor right? num: {num}, i: {i}")
+            factors.append(i)
+    return factors
+
+def parseInputModifyAcc(inputs, acc):
     
-   # inputs = openAndSeedList("input.txt", cwd)
-    inputs = openAndSeedList("input.txt", cwd)
-
-
     for input in inputs:
         splitted = input.split('-')
         range1,range2 = int(splitted[0]), int(splitted[1])
@@ -54,7 +68,21 @@ def main():
             shouldAdd = shouldAddThisId(str(i))
             if shouldAdd:
                 acc+=i
-    print(acc)
+
+def main():
+    acc = 0
+    cwd = os.getcwd()
+    
+   # inputs = openAndSeedList("input.txt", cwd)
+    inputs = openAndSeedList("input.txt", cwd)
+
+   # parseInputModifyAcc(inputs,acc)
+    
+ #   print(acc)
+    fac8 = getFactors(8)
+    fac32 = getFactors(32)
+    print(fac32,fac8)
+
 if __name__ == "__main__":
     main()
 
