@@ -11,20 +11,37 @@ def shouldAddThisId(id):
 
     length = len(id)
 
-    middle = length // 2
+  
+    for i in range(1 , length // 2 + 1):
+        res = length % i
 
+        if res == 0:
 
-    left = id[0:middle]
-    right = id[middle:]
+          res = checkIdWithStep(id,i)
 
-    print(f"id: {id}, l: {left},r: {right}, length: {length}, middle: {middle}")
+          if checkAllElementsEqual(res):
+              return True
+          
 
-    if left == right:
-        return True
-    else:
-        return False
+        else:
+            continue
+    return False
 
+def checkAllElementsEqual(lis):
+    first = lis[0]
 
+    for i in range(1,len(lis)):
+        if lis[i] != first:
+            return False
+        
+    return True
+
+def checkIdWithStep(id,step):
+    lis = []
+    for i in range(0, len(id), step):
+        cur = id[i:i+step]
+        lis.append(cur+"")
+    return lis
 
 def openAndSeedList(filename , dir):
     lis = []
@@ -37,51 +54,34 @@ def openAndSeedList(filename , dir):
 
     return lis
 
-
-def getFactors(num):
-    # 1 -> 1
-    # 2 -> 1, 2
-    # 3 -> 1, 3
-    # 4  > 1, 2, 4
-    factors = []
-
-    for i in range(1, num+1):
-        res = num / i
-        extra = num % i
-      #  print(num, i)
-
-        if extra != 0:
-            print(f"Not a factor right? num: {num}, i: {i}")
-        else:
-            print(f"Should be a factor right? num: {num}, i: {i}")
-            factors.append(i)
-    return factors
-
-def parseInputModifyAcc(inputs, acc):
-    
+def parseInputModifyAcc(inputs):
+    res = 0
     for input in inputs:
         splitted = input.split('-')
         range1,range2 = int(splitted[0]), int(splitted[1])
 
         for i in range(range1,range2+1):
+            
+            toCheck = str(i)
 
-            shouldAdd = shouldAddThisId(str(i))
+            shouldAdd = shouldAddThisId(toCheck)
+
             if shouldAdd:
-                acc+=i
+            #    print("HI", i, res)
+
+                res+= i
+    return res
 
 def main():
-    acc = 0
+    
     cwd = os.getcwd()
     
    # inputs = openAndSeedList("input.txt", cwd)
     inputs = openAndSeedList("input.txt", cwd)
 
-   # parseInputModifyAcc(inputs,acc)
-    
- #   print(acc)
-    fac8 = getFactors(8)
-    fac32 = getFactors(32)
-    print(fac32,fac8)
+    res = parseInputModifyAcc(inputs)
+    print(res)
+
 
 if __name__ == "__main__":
     main()
